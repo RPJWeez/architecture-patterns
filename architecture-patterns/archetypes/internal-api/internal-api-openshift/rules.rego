@@ -6,13 +6,13 @@ import rego.v1
 approved_active_active_dbs := ["CockroachDB", "Cassandra"]
 
 # Helper: Find the main app software system (by DSL identifier "app")
-app := sys {
+app := sys if {
     some sys in input.model.softwareSystems
     sys.properties["structurizr.dsl.identifier"] == "app"
 }
 
 # Helper: Find the database container (by DSL identifier "database")
-database := cont {
+database := cont if {
     some cont in app.containers
     cont.properties["structurizr.dsl.identifier"] == "database"
 }
@@ -25,7 +25,7 @@ deny contains msg if {
 
 # Rule: Active-active requires approved DB technology
 deny contains msg if {
-    # Check if app has "active-active" tag (tags is a string, so contains check)
+    # Check if app has "active-active" tag (tags is a comma-separated string)
     contains(app.tags, "active-active")
     
     tech := database.technology
