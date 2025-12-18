@@ -21,6 +21,6 @@ deny contains msg if {
 
 # Existing rule for missing database
 deny contains msg if {
-    not input.model.softwareSystems.webApp.containers.database  # Consistent path
+    not input.model.softwareSystems.app.containers.database  # Consistent path
     msg := "Missing required Database container"
 }
