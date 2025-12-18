@@ -25,8 +25,8 @@ deny contains msg if {
 
 # Rule: Active-active requires approved DB technology
 deny contains msg if {
-    # Check if app has "active-active" tag (tags is a comma-separated string)
-    contains(app.tags, "active-active")
+    # Case-insensitive check for "active-active" in the tags string
+    contains(lower(app.tags), "active-active")
     
     tech := database.technology
     
